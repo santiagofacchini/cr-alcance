@@ -1,7 +1,7 @@
 import re
 import os
-import ftplib
 import sys
+import ftplib
 from dotenv import load_dotenv
 import requests
 
@@ -13,7 +13,7 @@ load_dotenv(f'{os.environ["HOME"]}/.env')
 download_directory = f'{os.environ["HOME"]}'
 
 # Year to scrape
-year = 2022
+year = sys.argv[1]
 
 # FTP connection
 ftp_connection = ftplib.FTP(
@@ -68,3 +68,6 @@ for alcance in alcances_json:
                 alcance_pdf.write(alcance_response.content)
 
             print('OK!')
+
+# Close requests session
+session.close()
