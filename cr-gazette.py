@@ -1,19 +1,14 @@
 import re
 import os
-import sys
 import ftplib
-from dotenv import load_dotenv
 import requests
 
 
-# Load environment variables from .env file (must be in ~)
-load_dotenv(f'{os.environ["HOME"]}/.env')
-
 # Download directory
-download_directory = f'{os.environ["HOME"]}'
+download_directory = '/usr/src/app/downloads/'
 
 # Year to scrape
-year = sys.argv[1]
+year = 2022
 
 # FTP connection
 ftp_connection = ftplib.FTP(
@@ -54,17 +49,17 @@ for alcance in alcances_json:
     )
 
     # Delete file from local host if already in vLex
-    if os.path.isfile(f'{download_directory}/{alcance_name}') and alcance_name in ftp_alcances:
-        os.remove(f'{download_directory}/{alcance_name}')
+    if os.path.isfile(f'{download_directory}{alcance_name}') and alcance_name in ftp_alcances:
+        os.remove(f'{download_directory}{alcance_name}')
 
     # Download file
-    elif not os.path.isfile(f'{download_directory}/{alcance_name}'):
+    elif not os.path.isfile(f'{download_directory}{alcance_name}'):
         if alcance_name not in ftp_alcances:
             print(f'Downloading {alcance_name}...')
             alcance_response = session.get(f'https://www.imprentanacional.go.cr{alcance_link}', verify=False)
             print(alcance_response.status_code)
 
-            with open(f'{download_directory}/{alcance_name}', 'wb') as alcance_pdf:
+            with open(f'{download_directory}{alcance_name}', 'wb') as alcance_pdf:
                 alcance_pdf.write(alcance_response.content)
 
             print('OK!')
