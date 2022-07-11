@@ -7,4 +7,4 @@ RUN pip install --no-cache-dir -r requirements.txt
 
 COPY . .
 
-CMD [ "python", "/usr/src/app/cr-gazette.py" ]
+CMD [ "python", "/usr/src/app/cr-alcance.py" ]
